@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+    - ansible-role-certbot
+
+  vars:
+    certbot_auto_renew_user: root

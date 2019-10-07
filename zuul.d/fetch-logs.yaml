@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+    - name: Upload logs
+      synchronize:
+        src: "{{ zuul.project.src_dir }}/molecule.log"
+        dest: "{{ zuul.executor.log_root }}"
+        mode: pull
+        copy_links: true
+        verify_host: true
+        rsync_opts: []

@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: Run Molecule
+      shell: "molecule test | tee -a molecule.log"
+      args:
+        chdir: "{{ zuul.project.src_dir }}"
+      environment:
+        ANSIBLE_NOCOLOR: true

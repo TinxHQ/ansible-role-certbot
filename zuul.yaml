@@ -1,0 +1,17 @@
+- job:
+    parent: base
+    name: ansible-role-certbot
+    description: Test Ansible role certbot
+    pre-run: zuul.d/pre.yaml
+    run: zuul.d/run.yaml
+    post-run: zuul.d/fetch-logs.yaml
+
+- project:
+    check:
+      jobs:
+        - ansible-role-certbot:
+            nodeset: debian10-vm
+    gate:
+      jobs:
+        - ansible-role-certbot:
+            nodeset: debian10-vm

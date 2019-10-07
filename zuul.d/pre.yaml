@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: Install requirements
+      become: yes
+      pip:
+        executable: pip3
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - molecule
+        - molecule[docker]

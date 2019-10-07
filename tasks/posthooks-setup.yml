@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure certbot-auto is executable.
   file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
@@ -23,7 +22,7 @@
     dest: "/etc/letsencrypt/renewal-hooks/deploy/{{ item }}"
     owner: root
     group: root
-    mode: '0555'
+    mode: 0555
   with_items: "{{ certbot_hooks }}"
 
 - name: Ensure renew post hooks are in place.
@@ -32,5 +31,5 @@
     dest: "/etc/letsencrypt/renewal-hooks/post/{{ item }}"
     owner: root
     group: root
-    mode: '0555'
+    mode: 0555
   with_items: "{{ certbot_hooks }}"
