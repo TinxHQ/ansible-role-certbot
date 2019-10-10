@@ -1,2 +1,7 @@
+__pycache__
+.vagrant
+.vscode
+*.pyc
 *.retry
-tests/test.sh
+molecule.log
+roles
