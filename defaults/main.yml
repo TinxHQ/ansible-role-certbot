@@ -11,7 +11,7 @@ certbot_dir: /opt/certbot
 certbot_script: "{{ certbot_dir }}/certbot-auto"
 
 # Parameters used when creating new Certbot certs.
-certbot_create_if_missing: false
+certbot_create_if_missing: true
 certbot_http_01_port: 8080
 certbot_admin_email: email@example.com
 certbot_certs:
