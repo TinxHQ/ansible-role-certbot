@@ -5,7 +5,7 @@ A modified fork of https://github.com/vaizard/mage-certbot, a heavily modified f
 ## Changes from upstream
 
 - **Dropped possibility to use distribution packages** in order to decrease role-upkeep complexity and enable features present only in recent certbot releases. This makes installation from source the supported option, thus git is required.
-- **Dropped all modes except for the standalone mode** to achieve service-independ certificate updates without service downtime. This is achieved by using the http-01 challenge at an unused port (currently defaults to port 8080) for new requests as well as renews.
+- **Dropped all modes except for the standalone mode** to achieve service-independ certificate updates without service downtime. This is achieved by using the http-01 challenge at an unused port (currently defaults to port 8888) for new requests as well as renews. Provided a reverse proxy routes incoming queries for path `/.well-known/acme-challenge/` from 80/443 to 8888/8889.
 - **Added extensible out-of-the-box support for previously unsupported letsencrypt consumers (haproxy, monit, etc.)** achieved by a good use of pre/deploy/post hooks upon all certificate requests.
 
 ## Role Variables

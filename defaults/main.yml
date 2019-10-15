@@ -12,7 +12,8 @@ certbot_script: "{{ certbot_dir }}/certbot-auto"
 
 # Parameters used when creating new Certbot certs.
 certbot_create_if_missing: true
-certbot_http_01_port: 8080
+certbot_http_01_port: 8888
+certbot_tls_sni_01_port: 8889
 certbot_admin_email: email@example.com
 certbot_certs:
   []
@@ -22,7 +23,7 @@ certbot_certs:
   #     - example2.com
   # - domains:
   #     - example3.com
-certbot_create_command: "{{ certbot_script }} certonly --standalone --cert-name {{ cert_item.domains | first }}  --noninteractive --agree-tos --expand --rsa-key-size 4096 --renew-with-new-domains --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }} --force-renew --http-01-port {{ certbot_http_01_port }} --preferred-challenges http --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
+certbot_create_command: "{{ certbot_script }} certonly --standalone --cert-name {{ cert_item.domains | first }}  --noninteractive --agree-tos --expand --rsa-key-size 4096 --renew-with-new-domains --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }} --force-renew --http-01-port {{ certbot_http_01_port }} --tls-sni-01-port {{ certbot_tls_sni_01_port }} --preferred-challenges http --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
 
 certbot_hooks:
   - haproxy
