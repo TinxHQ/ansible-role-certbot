@@ -13,12 +13,12 @@
     path: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
     mode: 0400
 
-- name: Ensure certbot-auto is executable.
+- name: Creates renewal hooks directories.
   file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
     mode: 0644
     state: directory
-  with_items:
+  loop:
     - pre
     - post
     - deploy
@@ -28,7 +28,7 @@
     path: "/etc/ssl/{{ item }}"
     mode: 0700
     state: directory
-  with_items: "{{ certbot_hooks }}"
+  loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew deploy hooks are in place.
   template:
@@ -37,7 +37,7 @@
     owner: root
     group: root
     mode: 0555
-  with_items: "{{ certbot_hooks }}"
+  loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew post hooks are in place.
   template:
@@ -46,4 +46,16 @@
     owner: root
     group: root
     mode: 0555
-  with_items: "{{ certbot_hooks }}"
+  loop: "{{ certbot_hooks }}"
+
+- name: Create a first crt-list for HAProxy
+  block:
+    - name: Ensure config directory exists
+      file:
+        path: /etc/haproxy
+        state: directory
+    - name: Create crt list
+      copy:
+        content: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
+        dest: /etc/haproxy/crt-list.txt
+  when: "'haproxy' in certbot_hooks"
