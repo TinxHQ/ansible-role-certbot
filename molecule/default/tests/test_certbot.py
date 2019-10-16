@@ -7,7 +7,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
-@pytest.mark.parametrize("name", ["git"])
+@pytest.mark.parametrize("name", ["git", "ssl-cert"])
 def test_packages(host, name):
     p = host.package(name)
     assert p.is_installed
@@ -16,9 +16,12 @@ def test_packages(host, name):
 @pytest.mark.parametrize(
     "path",
     [
-        "/etc/letsencrypt/renewal-hooks/pre",
-        "/etc/letsencrypt/renewal-hooks/post",
         "/etc/letsencrypt/renewal-hooks/deploy",
+        "/etc/letsencrypt/renewal-hooks/post",
+        "/etc/letsencrypt/renewal-hooks/pre",
+        "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+        "/etc/ssl/private/ssl-cert-snakeoil-combined.pem",
+        "/etc/ssl/private/ssl-cert-snakeoil.key",
         "/opt/certbot/certbot-auto",
     ],
 )

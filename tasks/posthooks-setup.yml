@@ -5,7 +5,8 @@
 
 - name: Assemble combined snakeoil
   shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"
-  creates: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
+  args:
+    creates: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
 
 - name: Combined snakeoil mode
   file:
