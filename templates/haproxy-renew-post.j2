@@ -2,7 +2,7 @@
 
 if /usr/sbin/haproxy -c -V -f /etc/haproxy ; then
   ls -d -1 /etc/ssl/haproxy/* > /etc/haproxy/crt-list.txt
-  ls -d -1 /etc/ssl/private/mage-snakeoil-combined.pem >> /etc/haproxy/crt-list.txt
+  ls -d -1 /etc/ssl/private/ssl-cert-snakeoil-combined.pem >> /etc/haproxy/crt-list.txt
   /usr/sbin/systemctl reload haproxy
   logger -s "certbot: [info] Haproxy reloaded with renewed certs."
 else

@@ -1,4 +1,17 @@
 ---
+- name: Install ssl-cert to generate snakeoil cert
+  package:
+    name: ssl-cert
+
+- name: Assemble combined snakeoil
+  shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"
+  creates: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
+
+- name: Combined snakeoil mode
+  file:
+    path: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
+    mode: 0400
+
 - name: Ensure certbot-auto is executable.
   file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
