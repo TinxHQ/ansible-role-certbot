@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if /usr/sbin/haproxy -c -V -f /etc/haproxy ; then
-  ls -d -1 /etc/ssl/haproxy/* > /etc/haproxy/crt-list.txt
+  ls -d -1 /etc/ssl/haproxy/* > /etc/haproxy/crt-list.txt 2>/dev/null
   ls -d -1 /etc/ssl/private/ssl-cert-snakeoil-combined.pem >> /etc/haproxy/crt-list.txt
-  /usr/sbin/systemctl reload haproxy
+  /usr/bin/systemctl reload haproxy
   logger -s "certbot: [info] Haproxy reloaded with renewed certs."
 else
   logger -s "certbot: [error] Haproxy didn't reload with renewed certs, config test failed."
