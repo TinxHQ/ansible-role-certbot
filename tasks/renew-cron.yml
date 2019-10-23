@@ -1,4 +1,8 @@
 ---
+- name: Install cron
+  package:
+    name: cron
+
 - name: Add cron job for certbot renewal (if configured).
   cron:
     name: Certbot automatic renewal.

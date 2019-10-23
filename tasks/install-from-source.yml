@@ -15,3 +15,14 @@
   file:
     path: "{{ certbot_script }}"
     mode: 0755
+
+- name: Install EFF's certbot
+  command: "{{ certbot_script }} --install-only -n"
+  args:
+    creates: /opt/eff.org/certbot
+
+- name: Install plugins
+  pip:
+    name: "file:///opt/certbot/certbot-dns-{{ item }}"
+    virtualenv: /opt/eff.org/certbot/venv
+  loop: "{{ certbot_dns_plugins }}"
