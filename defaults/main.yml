@@ -1,7 +1,7 @@
 ---
 # Certbot auto-renew cron job configuration (for certificate renewals).
 certbot_auto_renew: true
-certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+certbot_auto_renew_user: "{{ ansible_user | default('root') }}"
 certbot_auto_renew_hour: 5
 certbot_auto_renew_minute: 43
 certbot_auto_renew_options: "--quiet --no-self-upgrade --allow-subset-of-names --expand --renew-with-new-domains --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
