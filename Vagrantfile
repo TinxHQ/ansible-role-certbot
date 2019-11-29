@@ -8,6 +8,12 @@ sudo apt-get update -qq
 sudo apt-get install -y -q curl git tree vim tox mlocate unzip tar gcc python3-dev
 sudo updatedb
 
+# Don't validate Github to avoid the prompt
+cat <<SSHCONFIG >> ~/.ssh/config
+Host github.com
+    StrictHostKeyChecking no
+SSHCONFIG
+
 # Installing Docker
 curl -fsSL get.docker.com | sudo bash
 sudo systemctl start docker
