@@ -3,27 +3,30 @@
 
 $provisionning = <<-PROVISIONNING
 
+# Installing tools
+sudo apt-get update -qq
+sudo apt-get install -y -q curl git tree vim tox mlocate unzip tar gcc python3-dev
+sudo updatedb
+
 # Installing Docker
-sudo curl -fsSL get.docker.com | bash
+curl -fsSL get.docker.com | sudo bash
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -a -G docker vagrant
 
-# Installing tools and molecule
-sudo apt-get update -qq
-sudo apt-get install -y -q curl git tree vim python3-pip
-sudo pip3 install molecule molecule[docker]
-sudo updatedb
-
 # Link for molecule to find the role
-sudo ln -sf /vagrant "/$(grep 'role:' /vagrant/molecule/default/playbook.yml | cut -d ':' -f2 | tr -d ' ')"
+sudo ln -sf /vagrant "/vagrant/molecule/default/$(grep 'ansible-role-' /vagrant/molecule/default/playbook.yml | cut -d ':' -f2 | tr -d ' ')"
+
+# First run
+cd /vagrant
+tox
 
 echo
-echo "All set. To run molecule test while editing on your workstation, you can"
+echo "All set. To run molecule test again while editing on your workstation, you can"
 echo " "
 echo "    vagrant ssh"
 echo "    cd /vagrant"
-echo "    molecule test"
+echo "    tox"
 echo " "
 
 PROVISIONNING

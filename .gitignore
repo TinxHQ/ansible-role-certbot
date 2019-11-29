@@ -1,7 +1,8 @@
 __pycache__
+.tox
 .vagrant
 .vscode
 *.pyc
-*.retry
+ansible-role-*
 molecule.log
 roles
