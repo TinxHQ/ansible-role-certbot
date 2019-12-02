@@ -58,4 +58,5 @@
       copy:
         content: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
         dest: /etc/haproxy/crt-list.txt
+        force: no
   when: "'haproxy' in certbot_hooks"
