@@ -50,6 +50,8 @@ Vagrant.configure(2) do |config|
     libvirt.cpus = "2"
   end
 
+  config.ssh.forward_agent = true
+
   config.vm.hostname = File.basename(Dir.getwd)+'.vagrant'
   if Vagrant.has_plugin?("vagrant-hostmanager")
     config.hostmanager.enabled = true
