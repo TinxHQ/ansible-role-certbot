@@ -1,5 +1,0 @@
-__pycache__
-.vagrant
-.vscode
-*.pyc
-molecule.log
