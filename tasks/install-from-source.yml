@@ -6,6 +6,7 @@
     version: "{{ certbot_version }}"
     update: "{{ certbot_keep_updated }}"
     force: true
+  tags: molecule-idempotence-notest
 
 - name: Set Certbot script variable.
   set_fact:
