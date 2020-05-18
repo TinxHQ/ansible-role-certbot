@@ -2,11 +2,6 @@
 - name: Converge
   hosts: all
   roles:
-    - role: dev-sec.os-hardening
-      tags: molecule-idempotence-notest
-
-    - dev-sec.ssh-hardening
-
     - ansible-role-certbot
 
   vars:
