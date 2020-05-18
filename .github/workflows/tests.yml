@@ -1,0 +1,52 @@
+name: Tests
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Cache pip
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+          restore-keys: |
+            ${{ runner.os }}-pip
+
+      - name: Install Tox
+        run: pip install tox
+
+      - name: Cache Tox
+        uses: actions/cache@v1
+        with:
+          path: ~/.tox
+          key: ${{ runner.os }}-tox-${{ hashFiles('**/tox.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-tox-
+
+      - name: Install Tox
+        run: pip install tox
+
+      - name: Setup git credentials
+        uses: fusion-engineering/setup-git-credentials@v2
+        with:
+          credentials: ${{secrets.GIT_CREDENTIALS}}
+
+      - name: Run Tox
+        run: tox
