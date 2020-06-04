@@ -1,9 +1,12 @@
-name: Tests
+name: Make cache
+
+# GitHub Action cache is scoped, hence a run triggered by a tag won't find cache made by another run triggered from a tag
+# but anyone can access cache from the default branch. So this workflow is about making this common cache.
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - master
 
 jobs:
   tests:
@@ -54,6 +57,6 @@ jobs:
         with:
           credentials: ${{secrets.GIT_CREDENTIALS}}
 
-      # Test
+      # Install test dependency
       - name: Run Tox
-        run: tox
+        run: tox dependency
