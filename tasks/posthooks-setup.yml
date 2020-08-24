@@ -54,9 +54,11 @@
       file:
         path: /etc/haproxy
         state: directory
+        mode: "0755"
     - name: Create crt list
       copy:
         content: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
         dest: /etc/haproxy/crt-list.txt
         force: no
+        mode: "0644"
   when: "'haproxy' in certbot_hooks"
