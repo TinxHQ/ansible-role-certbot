@@ -15,7 +15,7 @@
 - name: Ensure certbot-auto is executable.
   file:
     path: "{{ certbot_script }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Install EFF's certbot
   command: "{{ certbot_script }} --install-only -n"

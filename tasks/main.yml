@@ -1,13 +1,14 @@
 ---
-
 - import_tasks: install-from-source.yml
 
-- import_tasks: posthooks-setup.yml
+- import_tasks: hooks-setup.yml
+
+- import_tasks: acme-dns.yml
+  when: certbot_acme_dns_enabled
 
 - include_tasks: create-cert-standalone.yml
   with_items: "{{ certbot_certs }}"
-  when:
-    - certbot_create_if_missing
+  when: certbot_create_if_missing
   loop_control:
     loop_var: cert_item
 

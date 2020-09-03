@@ -11,22 +11,22 @@
 - name: Combined snakeoil mode
   file:
     path: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
-    mode: 0400
+    mode: "0400"
 
 - name: Creates renewal hooks directories.
   file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
-    mode: 0644
+    mode: "0644"
     state: directory
   loop:
     - pre
     - post
     - deploy
 
-- name: Ensure certbot-auto is executable.
+- name: Creates ssl hooks directories.
   file:
     path: "/etc/ssl/{{ item }}"
-    mode: 0700
+    mode: "0700"
     state: directory
   loop: "{{ certbot_hooks }}"
 
@@ -36,7 +36,7 @@
     dest: "/etc/letsencrypt/renewal-hooks/deploy/{{ item }}"
     owner: root
     group: root
-    mode: 0555
+    mode: "0555"
   loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew post hooks are in place.
@@ -45,7 +45,7 @@
     dest: "/etc/letsencrypt/renewal-hooks/post/{{ item }}"
     owner: root
     group: root
-    mode: 0555
+    mode: "0555"
   loop: "{{ certbot_hooks }}"
 
 - name: Create a first crt-list for HAProxy

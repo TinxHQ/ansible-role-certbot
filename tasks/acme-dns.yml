@@ -1,0 +1,38 @@
+- name: Install acmedns plugin
+  pip:
+    name: certbot-dns-acmedns
+    virtualenv: /opt/eff.org/certbot/venv
+
+- name: Add certbot's acme-dns configuration directory
+  file:
+    path: /etc/certbot/acme-dns
+    owner: "{{ certbot_auto_renew_user }}"
+    group: root
+    mode: "0770"
+
+- name: Add Certbot acme-dns plugin's configuration file
+  copy:
+    src: acme-dns.ini
+    dest: /etc/certbot/acme-dns/config.ini
+    owner: "{{ certbot_auto_renew_user }}"
+    group: root
+    mode: "0440"
+
+- name: Register domains
+  uri:
+    url: http://acme_dns.service.{{ metadata_environment }}.{{ metadata_owner }}/register
+    method: POST
+    status_code:
+      - 201
+    creates: /etc/certbot/acme-dns/{{ item.domains.[0] }}.json
+  loop: certbot_certs
+  register: certbot_acme_dns_registrations
+
+- name: Write registration file for each domain
+  copy:
+    content: "{{ item.json | to_nice_json }}"
+    dest: /etc/certbot/acme-dns/{{ item }}}}.json
+    owner: "{{ certbot_auto_renew_user }}"
+    group: root
+    mode: "0660"
+  loop: certbot_acme_dns_registrations.results

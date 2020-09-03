@@ -1,4 +1,8 @@
 ---
+# ACME DNS url
+certbot_acme_dns_enabled: true
+certbot_acme_dns_url: acme_dns.service.{{ metadata_environment }}.{{ metadata_owner }}
+
 # Certbot auto-renew cron job configuration (for certificate renewals).
 certbot_auto_renew: true
 certbot_auto_renew_user: "{{ ansible_user | default('root') }}"
@@ -33,9 +37,7 @@ certbot_create_standalone_stop_services:
   # - apache
   # - varnish
 
-certbot_repo: https://github.com/certbot/certbot.git
 certbot_version: master
 certbot_keep_updated: true
 
-certbot_dns_plugins:
-  - route53
+certbot_dns_plugins: []
