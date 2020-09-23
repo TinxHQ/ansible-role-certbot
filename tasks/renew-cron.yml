@@ -2,6 +2,7 @@
 - name: Install cron
   package:
     name: cron
+    state: present
 
 - name: Add cron job for certbot renewal (if configured).
   cron:

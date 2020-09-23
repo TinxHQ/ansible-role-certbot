@@ -11,7 +11,7 @@ sudo updatedb
 # Don't validate Github to avoid the prompt
 cat <<SSHCONFIG >> ~/.ssh/config
 Host github.com
-    StrictHostKeyChecking no
+  StrictHostKeyChecking no
 SSHCONFIG
 
 # Installing Docker
@@ -19,9 +19,6 @@ curl -fsSL get.docker.com | sudo bash
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -a -G docker vagrant
-
-# Link for molecule to find the role
-sudo ln -sf /vagrant "/vagrant/molecule/default/$(grep 'ansible-role-' /vagrant/molecule/default/playbook.yml | cut -d ':' -f2 | tr -d ' ')"
 
 # First run
 cd /vagrant
@@ -41,13 +38,13 @@ Vagrant.configure(2) do |config|
   config.vm.box = "debian/buster64"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
-    vb.cpus = "2"
+    vb.memory = "4096"
+    vb.cpus = "4"
   end
 
   config.vm.provider "libvirt" do |libvirt|
-    libvirt.memory = "2048"
-    libvirt.cpus = "2"
+    libvirt.memory = "4096"
+    libvirt.cpus = "4"
   end
 
   config.ssh.forward_agent = true

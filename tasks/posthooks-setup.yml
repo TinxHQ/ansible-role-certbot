@@ -2,6 +2,7 @@
 - name: Install ssl-cert to generate snakeoil cert
   package:
     name: ssl-cert
+    state: present
 
 - name: Assemble combined snakeoil
   shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"
@@ -11,12 +12,12 @@
 - name: Combined snakeoil mode
   file:
     path: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
-    mode: 0400
+    mode: "0400"
 
-- name: Creates renewal hooks directories.
+- name: Creates hooks directories.
   file:
-    path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
-    mode: 0644
+    path: "/etc/letsencrypt/hooks/{{ item }}"
+    mode: "0644"
     state: directory
   loop:
     - pre
@@ -26,26 +27,26 @@
 - name: Ensure certbot-auto is executable.
   file:
     path: "/etc/ssl/{{ item }}"
-    mode: 0700
+    mode: "0700"
     state: directory
   loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew deploy hooks are in place.
   template:
     src: "{{ item }}-renew-deploy.j2"
-    dest: "/etc/letsencrypt/renewal-hooks/deploy/{{ item }}"
+    dest: "/etc/letsencrypt/hooks/deploy/{{ item }}"
     owner: root
     group: root
-    mode: 0555
+    mode: "0555"
   loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew post hooks are in place.
   template:
     src: "{{ item }}-renew-post.j2"
-    dest: "/etc/letsencrypt/renewal-hooks/post/{{ item }}"
+    dest: "/etc/letsencrypt/hooks/post/{{ item }}"
     owner: root
     group: root
-    mode: 0555
+    mode: "0555"
   loop: "{{ certbot_hooks }}"
 
 - name: Create a first crt-list for HAProxy

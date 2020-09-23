@@ -14,7 +14,7 @@ A modified fork of https://github.com/vaizard/mage-certbot, a heavily modified f
     certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
     certbot_auto_renew_hour: 5
     certbot_auto_renew_minute: 43
-    certbot_auto_renew_options: "--quiet --no-self-upgrade --allow-subset-of-names --expand --renew-with-new-domains --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
+    certbot_auto_renew_options: "--quiet --no-self-upgrade --allow-subset-of-names --expand --renew-with-new-domains --pre-hook '/bin/run-parts /etc/letsencrypt/hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/hooks/deploy/'"
 
 By default, this role configures a cron job to run under the provided user account at the given hour and minute, every day. The defaults run `certbot renew` (or `certbot-auto renew`) via cron every day at 05:43:00 by the user you use in your Ansible playbook. It's preferred that you set a custom user/hour/minute so the renewal is during a low-traffic period and done by a non-root user account.
 
@@ -111,13 +111,16 @@ You can manually create certificates using the `certbot` (or `certbot-auto`) scr
 
 If you want to fully automate the process of adding a new certificate, but don't want to use this role's built in functionality, you can do so using the command line options to register, accept the terms of service, and then generate a cert using the standalone server:
 
-  1. Make sure any services listening on ports 80 and 443 (Apache, Nginx, Varnish, etc.) are stopped.
-  2. Register with something like `certbot register --agree-tos --email [your-email@example.com]`
+1. Make sure any services listening on ports 80 and 443 (Apache, Nginx, Varnish, etc.) are stopped.
+2. Register with something like `certbot register --agree-tos --email [your-email@example.com]`
+
+
     - Note: You won't need to do this step in the future, when generating additional certs on the same server.
-  3. Generate a cert for a domain whose DNS points to this server: `certbot certonly --noninteractive --standalone -d example.com -d www.example.com`
-  4. Re-start whatever was listening on ports 80 and 443 before.
-  5. Update your webserver's virtualhost TLS configuration to point at the new certificate (`fullchain.pem`) and private key (`privkey.pem`) Certbot just generated for the domain you passed in the `certbot` command.
-  6. Reload or restart your webserver so it uses the new HTTPS virtualhost configuration.
+
+3. Generate a cert for a domain whose DNS points to this server: `certbot certonly --noninteractive --standalone -d example.com -d www.example.com`
+4. Re-start whatever was listening on ports 80 and 443 before.
+5. Update your webserver's virtualhost TLS configuration to point at the new certificate (`fullchain.pem`) and private key (`privkey.pem`) Certbot just generated for the domain you passed in the `certbot` command.
+6. Reload or restart your webserver so it uses the new HTTPS virtualhost configuration.
 
 ### Certbot certificate auto-renewal
 

@@ -16,9 +16,9 @@ def test_packages(host, name):
 @pytest.mark.parametrize(
     "path",
     [
-        "/etc/letsencrypt/renewal-hooks/deploy",
-        "/etc/letsencrypt/renewal-hooks/post",
-        "/etc/letsencrypt/renewal-hooks/pre",
+        "/etc/letsencrypt/hooks/deploy",
+        "/etc/letsencrypt/hooks/post",
+        "/etc/letsencrypt/hooks/pre",
         "/etc/ssl/certs/ssl-cert-snakeoil.pem",
         "/etc/ssl/private/ssl-cert-snakeoil-combined.pem",
         "/etc/ssl/private/ssl-cert-snakeoil.key",

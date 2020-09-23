@@ -4,7 +4,7 @@ certbot_auto_renew: true
 certbot_auto_renew_user: "{{ ansible_user | default('root') }}"
 certbot_auto_renew_hour: "5"
 certbot_auto_renew_minute: "43"
-certbot_auto_renew_options: "--quiet --no-self-upgrade --allow-subset-of-names --expand --renew-with-new-domains --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
+certbot_auto_renew_options: "--quiet --no-self-upgrade --allow-subset-of-names --expand --renew-with-new-domains --pre-hook '/bin/run-parts /etc/letsencrypt/hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/hooks/deploy/'"
 
 # Certbot install path
 certbot_dir: /opt/certbot
@@ -22,10 +22,11 @@ certbot_certs:
   #     - example2.com
   # - domains:
   #     - example3.com
-certbot_create_command: "{{ certbot_script }} certonly --standalone --cert-name {{ cert_item.domains | first }}  --noninteractive --agree-tos --expand --rsa-key-size 4096 --renew-with-new-domains --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }} --force-renew --http-01-port {{ certbot_http_01_port }} --preferred-challenges http --pre-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/renewal-hooks/deploy/'"
+certbot_create_command: "{{ certbot_script }} certonly --standalone --cert-name {{ cert_item.domains | first }}  --noninteractive --agree-tos --expand --rsa-key-size 4096 --renew-with-new-domains --email {{ cert_item.email | default(certbot_admin_email) }} -d {{ cert_item.domains | join(',') }} --force-renew --http-01-port {{ certbot_http_01_port }} --preferred-challenges http --pre-hook '/bin/run-parts /etc/letsencrypt/hooks/pre/' --post-hook '/bin/run-parts /etc/letsencrypt/hooks/post/' --deploy-hook '/bin/run-parts /etc/letsencrypt/hooks/deploy/'"
 
 certbot_hooks:
-  - haproxy
+  []
+  # haproxy
 
 certbot_create_standalone_stop_services:
   []
@@ -38,4 +39,5 @@ certbot_version: master
 certbot_keep_updated: true
 
 certbot_dns_plugins:
-  - route53
+  []
+  # route53
