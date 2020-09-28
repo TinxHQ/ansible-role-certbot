@@ -11,4 +11,4 @@
         update_cache: yes
 
   roles:
-    - ansible-role-certbot
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
