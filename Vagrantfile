@@ -10,7 +10,7 @@ sudo updatedb
 
 # Don't validate Github to avoid the prompt
 cat <<SSHCONFIG >> ~/.ssh/config
-Host github.com
+Host *
   StrictHostKeyChecking no
 SSHCONFIG
 
