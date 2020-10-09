@@ -9,10 +9,12 @@ sudo apt-get install -y -q curl git tree vim tox mlocate unzip tar gcc python3-d
 sudo updatedb
 
 # Don't validate Github to avoid the prompt
-cat <<SSHCONFIG >> ~/.ssh/config
-Host *
+cat <<SSHCONFIG | tee /home/vagrant/.ssh/config
+Host github.com
   StrictHostKeyChecking no
 SSHCONFIG
+chmod 0600 /home/vagrant/.ssh/config
+chown vagrant: /home/vagrant/.ssh/config
 
 # Installing Docker
 curl -fsSL get.docker.com | sudo bash
