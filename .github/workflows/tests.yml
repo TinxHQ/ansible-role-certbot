@@ -18,15 +18,15 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
+          python-version: "${{ matrix.python }}"
 
       - name: Cache pip
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: "{% raw %}${{ runner.os }}{% endraw %}-pip"
+          key: "${{ runner.os }}-pip"
           restore-keys: |
-            {% raw %}${{ runner.os }}{% endraw %}-pip
+            ${{ runner.os }}-pip
 
       - name: Install Tox
         run: pip install tox
@@ -35,9 +35,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.tox
-          key: "{% raw %}${{ runner.os }}{% endraw %}-tox-{% raw %}${{ hashFiles('**/tox.ini') }}{% endraw %}"
+          key: "${{ runner.os }}-tox-${{ hashFiles('**/tox.ini') }}"
           restore-keys: |
-            {% raw %}${{ runner.os }}{% endraw %}-tox-
+            ${{ runner.os }}-tox-
 
       - name: Install Tox
         run: pip install tox
@@ -45,7 +45,7 @@ jobs:
       - name: Setup git credentials
         uses: fusion-engineering/setup-git-credentials@v2
         with:
-          credentials: "{% raw %}${{secrets.GIT_CREDENTIALS}}{% endraw %}"
+          credentials: "${{secrets.GIT_CREDENTIALS}}"
 
       - name: Run Tox
         run: tox
