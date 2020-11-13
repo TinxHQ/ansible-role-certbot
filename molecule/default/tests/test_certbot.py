@@ -23,6 +23,7 @@ def test_packages(host, name):
         "/etc/ssl/private/ssl-cert-snakeoil-combined.pem",
         "/etc/ssl/private/ssl-cert-snakeoil.key",
         "/opt/certbot/certbot-auto",
+        "/etc/letsencrypt/cli.ini",
     ],
 )
 def test_files(host, path):
