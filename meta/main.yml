@@ -22,5 +22,4 @@ galaxy_info:
     - certificates
     - ssl
     - https
-dependencies:
-  - geerlingguy.git
+dependencies: []

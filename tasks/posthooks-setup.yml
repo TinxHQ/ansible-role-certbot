@@ -3,6 +3,7 @@
   package:
     name: ssl-cert
     state: present
+  when: ansible_os_family == 'Debian'
 
 - name: Assemble combined snakeoil
   shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"

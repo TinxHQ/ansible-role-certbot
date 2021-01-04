@@ -1,0 +1,32 @@
+---
+- name: Install Certbot
+  apt:
+    name: python3-certbot
+    update_cache: yes
+
+- name: Install Certbot's plugins
+  apt:
+    name: "python3-certbot-dns-{{ item }}"
+    update_cache: yes
+  loop: "{{ certbot_dns_plugins }}"
+
+- name: Configuration directory
+  file:
+    dest: /etc/letsencrypt
+    state: directory
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Configuration file
+  copy:
+    dest: /etc/letsencrypt/cli.ini
+    content: |
+      # Managed by Ansible
+
+      # Use old chain to keep compatibility with older Android for 6 additional months
+      # https://community.letsencrypt.org/t/certbot-users-preparing-for-the-isrg-root-transition-january-11-2021/138059
+      preferred-chain = DST Root CA X3
+    owner: root
+    group: root
+    mode: "0400"

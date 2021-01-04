@@ -11,18 +11,12 @@ lint: |
   ansible-lint .
   flake8
 platforms:
-  - name: molecule-common-debian10-systemd
+  - name: molecule-certbot-debian10
     image: jrei/systemd-debian:10
     privileged: True
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     command: /lib/systemd/systemd
-  # # Ubuntu
-  # - name: molecule-common-ubuntu1804
-  #   image: jrei/systemd-ubuntu:18.04
-  #   privileged: True
-  #   volumes:
-  #     - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 provisioner:
   name: ansible
   log: true

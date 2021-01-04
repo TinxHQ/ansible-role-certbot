@@ -1,6 +1,5 @@
 ---
-
-- import_tasks: install-from-source.yml
+- import_tasks: install.yml
 
 - import_tasks: posthooks-setup.yml
 

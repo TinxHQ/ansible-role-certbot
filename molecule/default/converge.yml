@@ -4,11 +4,15 @@
 
   vars:
     certbot_auto_renew_user: root
+    certbot_dns_plugins:
+      - route53
 
   pre_tasks:
     - name: Update cache
       apt:
         update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == 'Debian'
 
   roles:
     - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

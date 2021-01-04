@@ -7,7 +7,8 @@
 - name: Add cron job for certbot renewal (if configured).
   cron:
     name: Certbot automatic renewal.
-    job: "{{ certbot_script }} renew {{ certbot_auto_renew_options }}"
+    job: "certbot renew {{ certbot_auto_renew_options }}"
     minute: "{{ certbot_auto_renew_minute }}"
     hour: "{{ certbot_auto_renew_hour }}"
     user: "{{ certbot_auto_renew_user }}"
+  tags: molecule-idempotence-notest
