@@ -7,11 +7,11 @@
     post-run: zuul.d/fetch-logs.yaml
 
 - project:
-    check:
+    wazo-check:
       jobs:
         - ansible-role-certbot:
             nodeset: debian10-vm
-    gate:
+    wazo-gate:
       jobs:
         - ansible-role-certbot:
             nodeset: debian10-vm
