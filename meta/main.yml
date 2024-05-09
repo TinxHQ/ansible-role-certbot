@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: certbot
+  namespace: wazo
   author: Rémy Garrigue
   description: Installs and configures Certbot for Let's Encrypt
   company: Wazo
