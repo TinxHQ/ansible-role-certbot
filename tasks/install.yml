@@ -1,17 +1,17 @@
 ---
 - name: Install Certbot
-  apt:
+  ansible.builtin.apt:
     name: python3-certbot
     update_cache: yes
 
 - name: Install Certbot's plugins
-  apt:
+  ansible.builtin.apt:
     name: "python3-certbot-dns-{{ item }}"
     update_cache: yes
   loop: "{{ certbot_dns_plugins }}"
 
 - name: Configuration directory
-  file:
+  ansible.builtin.file:
     dest: /etc/letsencrypt
     state: directory
     owner: root
@@ -19,7 +19,7 @@
     mode: "0644"
 
 - name: Configuration file
-  copy:
+  ansible.builtin.copy:
     dest: /etc/letsencrypt/cli.ini
     content: |
       # Managed by Ansible

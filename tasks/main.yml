@@ -1,14 +1,14 @@
 ---
-- import_tasks: install.yml
+- ansible.builtin.import_tasks: install.yml
 
-- import_tasks: posthooks-setup.yml
+- ansible.builtin.import_tasks: posthooks-setup.yml
 
-- include_tasks: create-cert-standalone.yml
+- ansible.builtin.include_tasks: create-cert-standalone.yml
   with_items: "{{ certbot_certs }}"
   when:
     - certbot_create_if_missing
   loop_control:
     loop_var: cert_item
 
-- import_tasks: renew-cron.yml
+- ansible.builtin.import_tasks: renew-cron.yml
   when: certbot_auto_renew

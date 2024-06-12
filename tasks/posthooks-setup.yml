@@ -1,22 +1,22 @@
 ---
 - name: Install ssl-cert to generate snakeoil cert
-  package:
+  ansible.builtin.package:
     name: ssl-cert
     state: present
   when: ansible_os_family == 'Debian'
 
 - name: Assemble combined snakeoil
-  shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"
+  ansible.builtin.shell: cat "/etc/ssl/private/ssl-cert-snakeoil.key" "/etc/ssl/certs/ssl-cert-snakeoil.pem" > "/etc/ssl/private/ssl-cert-snakeoil-combined.pem"
   args:
     creates: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
 
 - name: Combined snakeoil mode
-  file:
+  ansible.builtin.file:
     path: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
     mode: "0400"
 
 - name: Creates hooks directories.
-  file:
+  ansible.builtin.file:
     path: "/etc/letsencrypt/hooks/{{ item }}"
     mode: "0644"
     state: directory
@@ -26,14 +26,14 @@
     - deploy
 
 - name: Ensure certbot-auto is executable.
-  file:
+  ansible.builtin.file:
     path: "/etc/ssl/{{ item }}"
     mode: "0700"
     state: directory
   loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew deploy hooks are in place.
-  template:
+  ansible.builtin.template:
     src: "{{ item }}-renew-deploy.j2"
     dest: "/etc/letsencrypt/hooks/deploy/{{ item }}"
     owner: root
@@ -42,7 +42,7 @@
   loop: "{{ certbot_hooks }}"
 
 - name: Ensure renew post hooks are in place.
-  template:
+  ansible.builtin.template:
     src: "{{ item }}-renew-post.j2"
     dest: "/etc/letsencrypt/hooks/post/{{ item }}"
     owner: root
@@ -53,12 +53,12 @@
 - name: Create a first crt-list for HAProxy
   block:
     - name: Ensure config directory exists
-      file:
+      ansible.builtin.file:
         path: /etc/haproxy
         state: directory
         mode: "0755"
     - name: Create crt list
-      copy:
+      ansible.builtin.copy:
         content: /etc/ssl/private/ssl-cert-snakeoil-combined.pem
         dest: /etc/haproxy/crt-list.txt
         force: no
