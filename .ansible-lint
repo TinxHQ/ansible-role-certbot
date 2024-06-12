@@ -1,3 +1,6 @@
 skip_list:
   - '106'
   - '204'
+warn_list:  # or 'skip_list' to silence them completely
+  - parser-error  # AnsibleParserError
+  - unnamed-task  # All tasks should be named
